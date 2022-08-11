@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// Strat logger function
+// Start logging HTTP Request and Response for every request
 func StartLogger(address string, l *log.Logger, router *http.ServeMux) *http.Server {
 	return &http.Server{
 		Addr:     address,
