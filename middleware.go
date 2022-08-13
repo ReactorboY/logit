@@ -5,11 +5,14 @@ import (
 	"net/http"
 )
 
+//  wrapper to capture status code returned by
+// response
 type wrappedResponse struct {
 	http.ResponseWriter
 	status int
 }
 
+// Override WriteHeader so it can assign status
 func (w *wrappedResponse) WriteHeader(code int) {
 	w.status = code
 	w.ResponseWriter.WriteHeader(code)
@@ -35,6 +38,7 @@ func (list middlewares) apply(handler http.Handler) http.Handler {
 }
 
 // logging function
+// prints value to console of HTTP Request
 func logging(logger *log.Logger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
